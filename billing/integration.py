@@ -1,4 +1,10 @@
-from django.utils.importlib import import_module
+try:
+    # Django versions >= 1.9
+    from django.utils.module_loading import import_module
+except ImportError:
+    # Django versions < 1.9
+    from django.utils.importlib import import_module
+
 from django.conf import settings
 from django.conf.urls import patterns
 
@@ -37,7 +43,7 @@ class Integration(object):
         self.fields[key] = value
 
     def add_fields(self, params):
-        for (key, val) in params.iteritems():
+        for (key, val) in params.items():
             self.add_field(key, val)
 
     @property
